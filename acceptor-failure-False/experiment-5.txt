@@ -1,0 +1,10 @@
+runningTime, 35, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 18, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 15, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 11, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 12, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 35, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 13, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 12, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 25, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runningTime, 18, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1

@@ -1,0 +1,5 @@
+*.java
+utils/*.java
+.DS_Store
+.svn
+__pycache__
