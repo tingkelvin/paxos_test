@@ -34,9 +34,11 @@ pkill python
 
 ## Test 1 how the number of acceptors affect the run time?
 
-The test will run without failure mode on.
+The test will run without failure mode on and one immediate proposer.
+
 Number of acceptors: [3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047]
-The result is saved in acceptor-failure-False/.
+
+The result is saved in acceptor-failure-False.
 
 ```sh
 python3 test.py --test acceptor
