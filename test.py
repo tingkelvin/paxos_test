@@ -48,7 +48,7 @@ dir = None
 
 if test == "acceptor" and failure == False:
     # configuration on acceptor test
-    acceptersCount = [2**k-1 for k in range(2, 8)]
+    acceptersCount = [2**k-1 for k in range(2, 12)]
     max_delay = 100
     verbose = "false"
     iter = len(acceptersCount)
