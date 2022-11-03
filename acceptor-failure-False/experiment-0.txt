@@ -1,6 +1,6 @@
-runnTime, 36, consensusTime, 15, messagesCount, 15, numsOfImmedProposer, 2, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
-runnTime, 46, consensusTime, 17, messagesCount, 18, numsOfImmedProposer, 2, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
-runnTime, 42, consensusTime, 19, messagesCount, 15, numsOfImmedProposer, 2, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
-runnTime, 40, consensusTime, 10, messagesCount, 15, numsOfImmedProposer, 2, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
-runnTime, 37, consensusTime, 11, messagesCount, 14, numsOfImmedProposer, 2, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
-runnTime, 90, consensusTime, 56, messagesCount, 31, numsOfImmedProposer, 2, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 1
+runnTime, 12, consensusTime, 12, messagesCount, 10, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 3
+runnTime, 18, consensusTime, 18, messagesCount, 23, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 7
+runnTime, 17, consensusTime, 17, messagesCount, 47, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 15
+runnTime, 14, consensusTime, 14, messagesCount, 94, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 31
+runnTime, 17, consensusTime, 17, messagesCount, 191, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 63
+runnTime, 17, consensusTime, 17, messagesCount, 374, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 127

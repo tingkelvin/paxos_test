@@ -7,40 +7,50 @@ from utils import killport, bcolors, compile, printStatus, generateProfiles
 
 parser = argparse.ArgumentParser()
 # Add an argument
-parser.add_argument('--n', type=int, default=9)
-parser.add_argument('--verbose', type=str, default="true")
-parser.add_argument('--verboseCS', type=str, default="false")
-parser.add_argument('--iter', type=int, default=1)
-parser.add_argument('--a', type=int, default=6)
-parser.add_argument('--i', type=int, default=1)
-parser.add_argument('--no', type=int, default=0)
-parser.add_argument('--l', type=int, default=0)
-parser.add_argument('--nv', type=int, default=0)
-parser.add_argument('--test', type=str, default="")
-parser.add_argument('--rounds', type=int, default=10)
-parser.add_argument('--failure', type=bool, default=False)
+parser.add_argument(
+    '--verbose', help="verbose mode on proposer, default: true", type=str, default="true")
+parser.add_argument(
+    '--verboseCS', help="verbose mode on communicator sever, default: false", type=str, default="false")
+parser.add_argument(
+    '--iter', help="number of iteration, default: 1", type=int, default=1)
+parser.add_argument(
+    '--a', help="number of acceptor, default: 1", type=int, default=1)
+parser.add_argument(
+    '--i', help="number of immediate proposer, default: 1", type=int, default=1)
+parser.add_argument(
+    '--no', help="number of normal proposer, default: 0", type=int, default=0)
+parser.add_argument(
+    '--l', help="numner of late proposer, default: 0", type=int, default=0)
+parser.add_argument(
+    '--nv', help="number of never proposer, default: 0", type=int, default=0)
+parser.add_argument(
+    '--test', help="test mode current choice: acceptors", type=str, default="")
+parser.add_argument(
+    '--rounds', help="number of rounds, default: 10", type=int, default=10)
+parser.add_argument(
+    '--maxDelay', help="delay on reproposing, default: 10", type=int, default=10)
+parser.add_argument(
+    '--failure', help="failure mode, default: false", type=bool, default=False)
 args = parser.parse_args()
 verbose = args.verbose
 verboseCS = args.verboseCS
 iter = args.iter
 rounds = args.rounds
 failure = args.failure
-# immed = 1
-# normal = 0
-# late = 0
-# never = 0
-
 accept = args.a
 immed = args.i
 normal = args.no
 late = args.l
 never = args.nv
 test = args.test
-maxDelay = 10
+maxDelay = args.maxDelay
 dir = None
+
 if test == "acceptor" and failure == False:
-    acceptersCount = [1 for k in range(2, 12)]
+    # configuration on acceptor test
+    acceptersCount = [2**k-1 for k in range(2, 8)]
     max_delay = 100
+    verbose = "false"
     iter = len(acceptersCount)
 
 dir = f"{test}-failure-{failure}"
@@ -70,7 +80,8 @@ def runTest():
             numRequiredVotes = int(accept/2) + 1
 
             profiles = generateProfiles(accept, immed, normal, late, never)
-            print(accept, immed, normal, late, never)
+            print("Acceptors :", accept, "Immediate :", immed,
+                  "Normal :", normal, "Late :", late, "Never :", never)
             n = accept + immed + normal + late + never
             os.system(
                 f"java CommunicatorServer {n} {dir}/experiment-{round}.txt &")
@@ -78,7 +89,7 @@ def runTest():
             for i, (k, v) in enumerate(profiles.items()):
                 # print(v)
                 os.system(
-                    f"java Member {k} {v} {numRequiredVotes} {accept} {maxDelay} {('' if i == len(profiles) -1  else '&')}")
+                    f"java Member {k} {v} {numRequiredVotes} {accept} {maxDelay} {verbose} {('' if i == len(profiles) -1  else '&')}")
                 time.sleep(0.1)
             printStatus("OKCYAN", "Comparing Test Results")
             print(numRequiredVotes)
