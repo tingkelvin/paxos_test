@@ -1,3 +1,0 @@
-runnTime, 11, consensusTime, 11, messagesCount, 10, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 3
-runnTime, 17, consensusTime, 17, messagesCount, 23, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 7
-runnTime, 15, consensusTime, 15, messagesCount, 46, numsOfImmedProposer, 1, numsOfNormalProposer, null, numsOfLateProposer, null, numsOfNeverProposer, null, numsOfAcceptor, 15

@@ -3,7 +3,7 @@ import os
 import os
 import time
 from utils import killport, bcolors, compile, printStatus, generateProfiles
-
+import pandas as pd
 
 parser = argparse.ArgumentParser()
 # Add an argument
@@ -48,10 +48,17 @@ dir = None
 
 if test == "acceptor" and failure == False:
     # configuration on acceptor test
-    acceptersCount = [2**k-1 for k in range(2, 12)]
+    acceptersCount = [2**k-1 for k in range(2, 4)]
     max_delay = 100
     verbose = "false"
     iter = len(acceptersCount)
+
+if test == "proposer" and failure == False:
+    # configuration on acceptor test
+    proposerCount = [2*k for k in range(1, 11)]
+    max_delay = 10
+    verbose = "false"
+    iter = len(proposerCount)
 
 dir = f"{test}-failure-{failure}"
 
@@ -65,18 +72,24 @@ def init():
 
 
 def runTest():
-    for round in range(rounds):
+    for j in range(iter):
         continueTest = True
-
-        open(f"{dir}/experiment-{round}.txt", 'w').close()
-        for j in range(iter):
+        if test == "acceptor":
+            accept = acceptersCount[j]
+            file = f"{immed}-PROPOSERS"
+            fileDir = f"{dir}/{accept}-ACCEPTORS.csv"
+            open(fileDir, 'w').close()
+        if test == "proposer":
+            accept = 10
+            immed = proposerCount[j]
+            file = f"{immed}-PROPOSERS"
+            fileDir = f"{dir}/{immed}-PROPOSERS.csv"
+            open(fileDir, 'w').close()
+        for round in range(rounds):
             if not continueTest:
                 break
             open("result.txt", 'w').close()
-            if test == "acceptor":
-                accept = acceptersCount[j]
-            # accept = accepters[j]
-            # profiles = generateProfiles(accept, immed, normal, late, never)
+
             numRequiredVotes = int(accept/2) + 1
 
             profiles = generateProfiles(accept, immed, normal, late, never)
@@ -84,7 +97,7 @@ def runTest():
                   "Normal :", normal, "Late :", late, "Never :", never)
             n = accept + immed + normal + late + never
             os.system(
-                f"java CommunicatorServer {n} {dir}/experiment-{round}.txt &")
+                f"java CommunicatorServer {n} {fileDir} &")
             time.sleep(0.1)
             for i, (k, v) in enumerate(profiles.items()):
                 # print(v)
@@ -94,6 +107,7 @@ def runTest():
             printStatus("OKCYAN", "Comparing Test Results")
             print(numRequiredVotes)
             # Checking if the value is consistent
+
             f = open("result.txt", "r")
             value = None
             for line in f:
@@ -116,9 +130,14 @@ def runTest():
                         printStatus(
                             "WARNING", f"Test did not passed.")
                         raise Exception('The value does not match.')
+
             printStatus("OKGREEN", f"Test {j} passed.")
             time.sleep(1)
             killport(8080)
+        df = pd.read_csv(fileDir, names=["run time", "first consensus reach time", "number of messages",
+                         "number of immediate proposers", "number of normal proposers", "number of late proposers", "number of never proposers",  "number of acceptorsr"])
+        df.to_excel(f"{dir}/{file}.xlsx",
+                    f"{file}", index=False)
 
 
 if __name__ == "__main__":
