@@ -16,7 +16,7 @@ parser.add_argument(
 parser.add_argument(
     '--a', help="number of acceptor, default: 1", type=int, default=1)
 parser.add_argument(
-    '--i', help="number of immediate proposer, default: 1", type=int, default=1)
+    '--i', help="number of immediate proposer, default:0", type=int, default=0)
 parser.add_argument(
     '--no', help="number of normal proposer, default: 0", type=int, default=0)
 parser.add_argument(
@@ -25,6 +25,8 @@ parser.add_argument(
     '--nv', help="number of never proposer, default: 0", type=int, default=0)
 parser.add_argument(
     '--test', help="test mode current choice: acceptors", type=str, default="")
+parser.add_argument(
+    '--proposer', help="test mode current choice: acceptors", type=str, default="")
 parser.add_argument(
     '--rounds', help="number of rounds, default: 10", type=int, default=10)
 parser.add_argument(
@@ -44,21 +46,33 @@ late = args.l
 never = args.nv
 test = args.test
 maxDelay = args.maxDelay
+proposerType = args.proposer
 dir = None
+normalCount = None
 
-if test == "acceptor" and failure == False:
+if test == "acceptor":
     # configuration on acceptor test
-    acceptersCount = [2**k-1 for k in range(2, 4)]
-    max_delay = 100
+    acceptersCount = [2**k-1 for k in range(2, 12)]
     verbose = "false"
     iter = len(acceptersCount)
 
-if test == "proposer" and failure == False:
+if test == "proposer":
     # configuration on acceptor test
-    proposerCount = [2*k for k in range(1, 11)]
-    max_delay = 10
+    proposerCount = [i for i in range(11)]
     verbose = "false"
     iter = len(proposerCount)
+
+if test == "normal":
+    # configuration on acceptor test
+    normalCount = [i for i in range(11)]
+    verbose = "false"
+    iter = len(normalCount)
+
+if test == "late":
+    # configuration on acceptor test
+    lateCount = [i for i in range(11)]
+    verbose = "false"
+    iter = len(lateCount)
 
 dir = f"{test}-failure-{failure}"
 
@@ -72,19 +86,43 @@ def init():
 
 
 def runTest():
+    global normal, accept, immed, late
+
     for j in range(iter):
         continueTest = True
         if test == "acceptor":
             accept = acceptersCount[j]
-            file = f"{immed}-PROPOSERS"
-            fileDir = f"{dir}/{accept}-ACCEPTORS.csv"
+            immed = 3
+            maxDelay = 100
+            file = f"{accept}-ACCEPTORS.csv"
+            fileDir = f"{dir}/{file}"
             open(fileDir, 'w').close()
         if test == "proposer":
             accept = 10
+            maxDelay = 2*accept
             immed = proposerCount[j]
             file = f"{immed}-PROPOSERS"
-            fileDir = f"{dir}/{immed}-PROPOSERS.csv"
+            fileDir = f"{dir}/{file}"
             open(fileDir, 'w').close()
+
+        if test == "normal":
+            accept = 10
+            maxDelay = 6*accept
+            normal = normalCount[j]
+            immed = 10 - normalCount[j]
+            file = f"{normal}-NORMAL-PROPOSERS"
+            fileDir = f"{dir}/{file}.csv"
+            open(fileDir, 'w').close()
+
+        if test == "late":
+            accept = 10
+            maxDelay = 6*accept
+            normal = lateCount[j]
+            immed = 10 - lateCount[j]
+            file = f"{late}-LATE-PROPOSERS"
+            fileDir = f"{dir}/{file}.csv"
+            open(fileDir, 'w').close()
+
         for round in range(rounds):
             if not continueTest:
                 break
@@ -92,9 +130,16 @@ def runTest():
 
             numRequiredVotes = int(accept/2) + 1
 
-            profiles = generateProfiles(accept, immed, normal, late, never)
-            print("Acceptors :", accept, "Immediate :", immed,
-                  "Normal :", normal, "Late :", late, "Never :", never)
+            profiles = generateProfiles(
+                accept, immed, normal, late, never, failure)
+            counter = {}
+            for i, (k, v) in enumerate(profiles.items()):
+                if v in counter:
+                    counter[v] += 1
+                else:
+                    counter[v] = 1
+            print(counter)
+
             n = accept + immed + normal + late + never
             os.system(
                 f"java CommunicatorServer {n} {fileDir} &")
@@ -134,8 +179,8 @@ def runTest():
             printStatus("OKGREEN", f"Test {j} passed.")
             time.sleep(1)
             killport(8080)
-        df = pd.read_csv(fileDir, names=["run time", "first consensus reach time", "number of messages",
-                         "number of immediate proposers", "number of normal proposers", "number of late proposers", "number of never proposers",  "number of acceptorsr"])
+        df = pd.read_csv(fileDir, names=["run time", "consensus  time", "value",  "messages", "delay",
+                         "immediate", "normal", "late", "never",  "acceptors"])
         df.to_excel(f"{dir}/{file}.xlsx",
                     f"{file}", index=False)
 

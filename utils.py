@@ -72,7 +72,7 @@ def generateRandomProfilesID(size, profiles):
     return random.sample(range(1, size+1), size), random.sample(range(1, size+1), profiles)
 
 
-def generateProfiles(accept, immed, normal, late, never):
+def generateProfiles(accept, immed, normal, late, never, failure):
     setting = ["acceptor", "immediate", "unresponsive", "normal", "never"]
     profiles = {}
     currentID = 1
@@ -94,8 +94,13 @@ def generateProfiles(accept, immed, normal, late, never):
         profiles[id] = "late"
     currentID = currentID + len(lateID)
     acceptorID = generateProfilesID(currentID, accept)
-    for id in acceptorID:
-        profiles[id] = "acceptor"
+    print(failure)
+    if failure:
+        for id in acceptorID:
+            profiles[id] = "failureAcceptor"
+    else:
+        for id in acceptorID:
+            profiles[id] = "acceptor"
 
     return profiles
 
