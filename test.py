@@ -34,7 +34,7 @@ normalCount = None
 
 if test == "acceptor":
     # configuration on acceptor test
-    acceptersCount = [2**k-1 for k in range(2, 12)]
+    acceptersCount = [2**k-1 for k in range(2, 11)]
     verbose = "false"
     max_delay = 100
     iter = len(acceptersCount)
